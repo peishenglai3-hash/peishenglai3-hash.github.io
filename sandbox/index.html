@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>评价装置沙盒 · 赖选</title>
+<meta name="description" content="二十个虚构学生，两个虚构指标。拖动权重，看「谁被认作有能力」的名单换掉几个人。">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+.sbx { margin-top: 32px; }
+.ctrl {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 20px 0 18px;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  gap: 18px 28px;
+  align-items: center;
+}
+@media (max-width: 760px) { .ctrl { grid-template-columns: 1fr; } }
+
+.ctrl label { display: block; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .14em; color: var(--ink-2); text-transform: uppercase; }
+.ctrl output {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: .82rem;
+  color: var(--ink);
+}
+.slider-row { display: flex; align-items: center; gap: 14px; margin-top: 10px; }
+.slider-row span { font-family: var(--font-mono); font-size: .68rem; color: var(--ink-2); letter-spacing: .06em; white-space: nowrap; }
+
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; max-width: 420px; height: 22px;
+  background: transparent; cursor: pointer; margin: 0;
+}
+input[type="range"]::-webkit-slider-runnable-track { height: 2px; background: var(--ink); }
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 14px; height: 14px; margin-top: -6px;
+  background: var(--paper); border: 2px solid var(--ink); border-radius: 0;
+}
+input[type="range"]::-moz-range-track { height: 2px; background: var(--ink); }
+input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; background: var(--paper); border: 2px solid var(--ink); border-radius: 0; }
+
+.readout { text-align: right; }
+@media (max-width: 760px) { .readout { text-align: left; } }
+.readout .big {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.9rem; line-height: 1; letter-spacing: -.01em; display: block; margin-top: 4px;
+}
+.readout .lab { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .14em; color: var(--ink-2); text-transform: uppercase; }
+
+.board { position: relative; margin-top: 26px; }
+.row {
+  position: absolute; left: 0; right: 0; height: 26px;
+  display: grid;
+  grid-template-columns: 52px minmax(0,1fr) 42px;
+  align-items: center;
+  gap: 10px;
+  transition: transform .18s cubic-bezier(.2,.7,.3,1);
+  will-change: transform;
+  background: var(--paper);
+}
+.row .id { font-family: var(--font-mono); font-size: .7rem; color: var(--ink-2); letter-spacing: .06em; }
+.row .track { height: 6px; background: #e2ded4; position: relative; }
+.row .bar { position: absolute; inset: 0 auto 0 0; background: var(--ink-2); transition: width .18s cubic-bezier(.2,.7,.3,1); }
+.row .val { font-family: var(--font-mono); font-size: .7rem; font-variant-numeric: tabular-nums; text-align: right; color: var(--ink-2); }
+.row.top .id, .row.top .val { color: var(--ink); }
+.row.top .bar { background: var(--ink); }
+.row.top { z-index: 2; }
+.row.top::before {
+  content: ""; position: absolute; left: -14px; top: 50%; width: 5px; height: 5px;
+  margin-top: -2.5px; background: var(--ink);
+}
+@media (max-width: 640px) { .row.top::before { left: -9px; } .board { margin-left: 9px; } }
+
+.verdict { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--rule); min-height: 112px; }
+.verdict .v-line { font-size: 1.02rem; line-height: 1.8; max-width: 30em; }
+.verdict .v-line b { font-weight: 600; }
+
+.tips { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 14px; }
+.tips button {
+  font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em;
+  background: none; border: 1px solid var(--rule); color: var(--ink-2);
+  padding: 6px 10px; cursor: pointer; border-radius: 2px;
+}
+.tips button:hover { border-color: var(--ink); color: var(--ink); }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<div class="wrap">
+  <header class="site-head">
+    <a class="brand" href="../">赖选 · 展厅</a>
+    <nav>
+      <a href="https://github.com/peishenglai3-hash">主页</a>
+      <a href="../desk/">书桌</a>
+      <a href="../sandbox/" aria-current="page">沙盒</a>
+      <a href="../field/">方法</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <div class="section cap-hide" style="padding-top:38px">
+      <span class="mono">02 / 我在研究什么</span>
+      <h1 style="margin-top:.35em">排序是有立场的</h1>
+      <p class="lede">二十个虚构学生，两个虚构指标。左边的滑块决定「期中」占多少、平时参与占多少。右边的排行榜会当场重排——看「谁被认作有能力」这件事，有多依赖你手上那把尺子。</p>
+    </div>
+
+    <section class="sbx" aria-label="评价装置沙盒">
+      <div class="ctrl">
+        <div>
+          <label for="w">期中成绩占的权重</label>
+          <div class="slider-row">
+            <span>只看平时参与</span>
+            <input id="w" type="range" min="0" max="100" step="1" value="100"
+                   aria-describedby="w-note">
+            <span>只看期中</span>
+          </div>
+          <p id="w-note" class="small muted" style="margin:10px 0 0">综合分 = 期中 × w + 平时参与 × (1 − w)</p>
+        </div>
+        <div class="readout">
+          <span class="lab">前五名换掉</span>
+          <output class="big" id="churn">0 / 5</output>
+        </div>
+      </div>
+
+      <div class="board" id="board" role="list" aria-label="综合分排行榜，从高到低"></div>
+
+      <div class="verdict">
+        <p class="v-line" id="verdict">名单没动。</p>
+        <div class="tips">
+          <button type="button" data-set="100">只看期中</button>
+          <button type="button" data-set="50">各占一半</button>
+          <button type="button" data-set="0">只看平时参与</button>
+        </div>
+      </div>
+
+      <p class="note cap-hide">这不是数据，是一个可以拨的装置。二十个编号、两个指标、一句「综合分」，都是我编的——我想说明的是排序本身有立场，不是这批人。「前五名」之所以重要，是因为现实里的名额、推荐、机会，通常就卡在这几个位置上。</p>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <span>赖选 · 2026</span>
+    <span><a href="../">← 回展厅</a> · <a href="https://github.com/peishenglai3-hash">GitHub</a></span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  // 二十个虚构学生：[期中, 平时参与]
+  const S = [
+    [92,61],[88,70],[85,82],[83,55],[81,74],
+    [79,88],[77,66],[76,91],[74,59],[72,79],
+    [70,85],[68,62],[66,93],[64,71],[62,58],
+    [60,84],[58,76],[56,95],[54,68],[52,80],
+  ];
+  const ROW_H = 26;
+  const BASELINE = [...S.keys()]
+    .sort((a, b) => S[b][0] - S[a][0])
+    .slice(0, 5);                      // 只看期中时的前五名
+
+  const board = document.getElementById('board');
+  const churnEl = document.getElementById('churn');
+  const verdictEl = document.getElementById('verdict');
+  const slider = document.getElementById('w');
+
+  // 每行只建一次，之后只改 transform / 宽度，重排才有过渡
+  const rows = S.map((_, i) => {
+    const el = document.createElement('div');
+    el.className = 'row';
+    el.setAttribute('role', 'listitem');
+    el.innerHTML =
+      '<span class="id">S' + String(i + 1).padStart(2, '0') + '</span>' +
+      '<span class="track"><span class="bar"></span></span>' +
+      '<span class="val"></span>';
+    board.appendChild(el);
+    return { el, bar: el.querySelector('.bar'), val: el.querySelector('.val') };
+  });
+  board.style.height = S.length * ROW_H + 'px';
+
+  let lastTop5 = [];
+
+  function paint(w) {                  // w: 期中权重 0..1
+    const score = S.map(([mid, part], i) => ({ i, v: mid * w + part * (1 - w) }));
+    const order = [...score].sort((a, b) => b.v - a.v);
+    const rank = new Map(order.map((o, r) => [o.i, r]));
+    const top5 = order.slice(0, 5).map(o => o.i);
+
+    for (const [idx, r] of rank) {
+      const row = rows[idx];
+      row.el.style.transform = 'translateY(' + r * ROW_H + 'px)';
+      row.bar.style.width = Math.max(2, order.find(o => o.i === idx).v) + '%';
+      row.val.textContent = Math.round(order.find(o => o.i === idx).v);
+      row.el.classList.toggle('top', top5.includes(idx));
+      row.el.setAttribute('aria-label', 'S' + String(idx + 1).padStart(2, '0') + '，' + Math.round(order.find(o => o.i === idx).v) + ' 分，第 ' + (r + 1) + ' 名');
+    }
+
+    const stayed = top5.filter(i => BASELINE.includes(i)).length;
+    const churn = 5 - stayed;
+    churnEl.textContent = churn + ' / 5';
+
+    const v = {
+      0: '名单没动。两个指标在这批人身上量出同一个顺序——这本身就是个值得解释的巧合。',
+      1: '换掉 1 个人。两个尺子在这批人身上还算一致，但那条缝已经出现了。',
+      2: '换掉 2 个人。变化集中在边缘，越靠近第 5 名越像运气。',
+      3: '换掉 3 个人。中间一大部分被重排，边界上的人开始漂。',
+      4: '换掉 4 个人。只剩 1 个在两张榜上都站得住，剩下 4 个位置的性质，是「取决于你怎么量」。',
+      5: '前五名一个都没剩。换一个指标，被认作有能力的就是另外一批人——而两把尺子量的是同一群人。',
+    }[churn];
+    verdictEl.textContent = v;
+    lastTop5 = top5;
+  }
+
+  let raf = null;
+  const set = (pct) => { slider.value = String(pct); paint(Number(pct) / 100); };
+
+  slider.addEventListener('input', () => {
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+    paint(Number(slider.value) / 100);
+  });
+  document.querySelectorAll('[data-set]').forEach(b =>
+    b.addEventListener('click', () => set(b.dataset.set))
+  );
+
+  set(100);
+
+  // 抓帧用：render(t) 把权重推到 w(t)；t=0 → 100%，t=6000 → 0%
+  window.__apt = {
+    render(t) {
+      const cycle = 7000;
+      const p = t % cycle;
+      // 3.5s 从 100 拖到 0，停 1.2s，再回 100
+      let pct;
+      if (p < 3500) pct = 100 - (p / 3500) * 100;
+      else if (p < 4700) pct = 0;
+      else pct = Math.min(100, ((p - 4700) / 2300) * 100);
+      set(Math.round(pct));
+    },
+    state: () => ({ w: Number(slider.value), churn: churnEl.textContent, top5: lastTop5 }),
+    stop() {},
+  };
+})();
+</script>
+</body>
+</html>

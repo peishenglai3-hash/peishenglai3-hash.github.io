@@ -1,0 +1,128 @@
+/* 墨水经典（ink-classic）—— 取值直接来自
+   dsh-guizang-design/skills/guizang-page-skill/assets/themes.json
+   paper #f1efea / ink #0a0a0b / accent #111111
+   版式规则来自 references/design-rules.md（1200px 容器 / 80px 边距 /
+   17px 正文 / 1.85 行高 / 36em 行长 / 最多 2 条粗线 / 每风格一个 accent）。
+   本文件只新增两个派生量：--ink-2（次级文字）与 --rule（细线），
+   两者都要过 WCAG AA，由 build/contrast.mjs 计算。 */
+
+:root {
+  --paper: #f1efea;
+  --ink: #0a0a0b;
+  --ink-2: #4f4f53;
+  --rule: #d5d1c6;
+  --accent: #111111;
+
+  --font-serif: 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif CN',
+    'Songti SC', 'STSong', 'SimSun', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC',
+    sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Consolas,
+    'Courier New', monospace;
+
+  --text-size: 1.0625rem;      /* 17px */
+  --text-leading: 1.85;
+  --measure: 36em;
+  --gap-section: 64px;
+  --container: 1200px;
+  --pad: 80px;
+  --radius: 3px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-size);
+  line-height: var(--text-leading);
+  letter-spacing: 0;
+  line-break: strict;
+  overflow-wrap: break-word;
+  text-rendering: optimizeLegibility;
+}
+
+.wrap {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+@media (max-width: 1024px) {
+  :root { --pad: 32px; }
+}
+@media (max-width: 640px) {
+  :root { --pad: 20px; --text-size: 1rem; --gap-section: 44px; }
+}
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  margin: 0 0 .6em;
+}
+h1 { font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.3; }
+h2 { font-size: clamp(1.35rem, 2.6vw, 1.75rem); }
+
+p { margin: 0 0 1em; max-width: var(--measure); }
+a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+a:hover { text-decoration-thickness: 2px; }
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.rule { height: 1px; background: var(--rule); border: 0; margin: 0; }
+.rule-thick { height: 2px; background: var(--ink); border: 0; margin: 0; }
+
+.section { padding: var(--gap-section) 0 0; }
+.muted { color: var(--ink-2); }
+.small { font-size: .88rem; line-height: 1.7; }
+
+/* 焦点可见性：键盘用户必须看得见 */
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+.skip:focus {
+  left: 12px;
+  top: 12px;
+  z-index: 99;
+  background: var(--paper);
+  padding: 8px 12px;
+  border: 1px solid var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+/* 抓帧模式：build/capture.mjs 会在 <html> 上打 data-capture，
+   把站点外壳藏掉，只留 demo 本身，GIF 才不会带上页头或被切顶。 */
+html[data-capture] .site-head,
+html[data-capture] .site-foot,
+html[data-capture] .cap-hide { display: none !important; }
+html[data-capture] body { padding: 0; }
+html[data-capture] .desk,
+html[data-capture] .sbx { margin-top: 0 !important; }

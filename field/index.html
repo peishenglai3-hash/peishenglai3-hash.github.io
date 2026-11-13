@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方法回路 · 赖选</title>
+<meta name="description" content="六步。点亮任意一步读它问什么，也可以把某一步拿掉，看结论当场降级成描述或猜想。">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+.ring-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+  gap: 40px;
+  align-items: start;
+  margin-top: 30px;
+}
+@media (max-width: 900px) { .ring-wrap { grid-template-columns: 1fr; gap: 26px; } }
+.side { min-width: 0; }
+
+.ring { position: relative; width: 100%; max-width: 660px; aspect-ratio: 1 / 1; margin: 0 auto; }
+.ring svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ring .seg { fill: none; stroke: var(--rule); stroke-width: 1.5; transition: stroke .25s ease, stroke-dasharray .25s ease; }
+.ring .seg.cut { stroke: #cfc9bb; stroke-dasharray: 3 5; }
+.ring .dot { fill: var(--ink); transition: r .2s ease; }
+
+.step {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 7px 11px;
+  font-family: var(--font-serif);
+  font-size: .86rem;
+  line-height: 1.3;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 2px;
+  transition: border-color .18s ease, background .18s ease, color .18s ease;
+}
+.step .n {
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  letter-spacing: .08em;
+  color: var(--ink-2);
+  margin-right: 6px;
+}
+.step:hover { border-color: var(--ink); }
+.step[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.step[aria-pressed="true"] .n { color: rgba(241,239,234,.7); }
+.step.gone { border-style: dashed; color: var(--ink-2); text-decoration: line-through; }
+
+.detail { border-top: 1px solid var(--rule); padding-top: 18px; }
+.detail .d-k {
+  font-family: var(--font-mono); font-size: .66rem; letter-spacing: .16em;
+  color: var(--ink-2); text-transform: uppercase;
+}
+.detail h2 { font-size: 1.3rem; margin: .35em 0 .5em; }
+.detail .q { font-size: 1rem; line-height: 1.8; margin: 0 0 .9em; }
+.detail .q::before { content: "问："; font-family: var(--font-mono); font-size: .72rem; color: var(--ink-2); }
+.detail .a { font-size: .94rem; line-height: 1.8; color: var(--ink-2); margin: 0 0 1.1em; max-width: 27em; }
+
+.toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em;
+  border: 1px solid var(--rule); background: none; color: var(--ink);
+  padding: 8px 12px; cursor: pointer; border-radius: 2px;
+}
+.toggle:hover { border-color: var(--ink); }
+.toggle[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.grade {
+  margin-top: 24px; padding: 16px 18px;
+  border: 1px solid var(--rule); border-left: 3px solid var(--ink);
+  background: #ece9e1;
+}
+.grade .g-k { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .16em; color: var(--ink-2); text-transform: uppercase; display: block; margin-bottom: 6px; }
+.grade .g-v { font-size: 1.05rem; line-height: 1.7; margin: 0; }
+.grade .g-v b { font-weight: 600; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<div class="wrap">
+  <header class="site-head">
+    <a class="brand" href="../">赖选 · 展厅</a>
+    <nav>
+      <a href="https://github.com/peishenglai3-hash">主页</a>
+      <a href="../desk/">书桌</a>
+      <a href="../sandbox/">沙盒</a>
+      <a href="../field/" aria-current="page">方法</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <div class="section cap-hide" style="padding-top:38px">
+      <span class="mono">03 / 我怎么做</span>
+      <h1 style="margin-top:.35em">一条会回到起点的路</h1>
+      <p class="lede">六步。点任意一步，读它到底在问什么；也可以按「把它拿掉」，看结论会降成什么样。降级不是修辞——哪一步没真的发生，那一段就只能算描述或猜想。</p>
+    </div>
+
+    <div class="ring-wrap">
+      <div class="ring" id="ring">
+        <svg viewBox="0 0 560 560" aria-hidden="true">
+          <path id="loop" fill="none" stroke="none" d=""></path>
+          <g id="segs"></g>
+          <g id="dots"></g>
+        </svg>
+        <!-- 六个按钮由脚本定位 -->
+      </div>
+
+      <div class="side">
+        <div class="detail" id="detail">
+          <span class="d-k" id="d-k">STEP 01 / 06</span>
+          <h2 id="d-t">扰动 / 具体经验</h2>
+          <p class="q" id="d-q"></p>
+          <p class="a" id="d-a"></p>
+          <button class="toggle" id="cut" aria-pressed="false" type="button">把它拿掉</button>
+        </div>
+
+        <div class="grade" id="grade" aria-live="polite">
+          <span class="g-k">按这一页的口径，现在的结论算</span>
+          <p class="g-v" id="g-v"><b>暂定综合</b>：六步都发生了。</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="note cap-hide">这六步来自主页上那张方法图，一步没加、一步没减。每一步的说明写的是「它在问什么」，不是我的结论；结论在我的文章里，而且都还带着日期。</p>
+  </main>
+
+  <footer class="site-foot">
+    <span>赖选 · 2026</span>
+    <span><a href="../">← 回展厅</a> · <a href="https://github.com/peishenglai3-hash">GitHub</a></span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  const STEPS = [
+    { t: '扰动 / 具体经验', q: '是什么具体的东西先撞到了你，让你非想不可？',
+      a: '不是先有概念，再去找例子。找不到这团具体的东西，后面五步都是在纸上推。',
+      cut: '结论降为「概念演绎」：词与词互相解释，谁也不欠现实一个交代。' },
+    { t: '跨学科照亮', q: '你从哪个别的传统借了光？借来的是方法，还是结论？',
+      a: '借的是灯，不是钥匙。把别人的结论直接搬到自己的现场，通常搬不动。',
+      cut: '结论降为「就事论事」：只在这一个案例里成立，说不出它为什么必然如此。' },
+    { t: '机制桥', q: 'A 通过什么把 B 变成现在这样？中间那几环叫什么？',
+      a: '这一环是全文最容易被跳过的：跳过它，前后两段只是并列摆着，不是解释。',
+      cut: '结论降为「相关性描述」：两个东西一起出现，但你不知道谁推了谁。' },
+    { t: '自我攻击', q: '你自己先找的反例在哪？如果找不到，凭什么说它成立？',
+      a: '先攻自己一遍，比被人攻省事。攻不动的地方，往往就是问题真正所在。',
+      cut: '结论降为「未经检验的主张」：它可能对，但你还没给它一次被打的机会。' },
+    { t: '暂定综合', q: '这一步合成了什么？「暂定」是修辞，还是真的可以改？',
+      a: '「暂定」是这个词的一半。写不出「什么情况下我会改口」，它就不是暂定的。',
+      cut: '结论降为「断言」：说死了，也就没法再被修正。' },
+    { t: '回到实践', q: '拿回去用了吗？用不动，是现实的问题还是这套说法的问题？',
+      a: '用不动不一定是现实错了。多数时候是这套说法还不够细。',
+      cut: '结论降为「悬空」：它不需要对任何人的处境负责，也就很难是真的。' },
+  ];
+
+  const CX = 280, CY = 280, R = 215;
+  const pts = STEPS.map((_, i) => {
+    const a = (-90 + i * 60) * Math.PI / 180;
+    return { x: CX + R * Math.cos(a), y: CY + R * Math.sin(a) };
+  });
+
+  // 圆角回路：相邻两点用二次贝塞尔，控制点朝圆心收一点
+  function segPath(i) {
+    const a = pts[i], b = pts[(i + 1) % 6];
+    const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+    const kx = mx + (CX - mx) * 0.24, ky = my + (CY - my) * 0.24;
+    return { d: `M ${a.x.toFixed(1)} ${a.y.toFixed(1)} Q ${kx.toFixed(1)} ${ky.toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}`, mid: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 } };
+  }
+
+  const segsG = document.getElementById('segs');
+  const dotsG = document.getElementById('dots');
+  const segs = [];
+  STEPS.forEach((_, i) => {
+    const p = segPath(i);
+    const el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    el.setAttribute('d', p.d);
+    el.setAttribute('class', 'seg');
+    segsG.appendChild(el);
+    segs.push(el);
+    const d = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    d.setAttribute('cx', pts[i].x); d.setAttribute('cy', pts[i].y);
+    d.setAttribute('r', 3.5); d.setAttribute('class', 'dot'); d.setAttribute('opacity', '0');
+    dotsG.appendChild(d);
+  });
+
+  const ring = document.getElementById('ring');
+  const btns = STEPS.map((s, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'step';
+    b.style.left = (pts[i].x / 560 * 100) + '%';
+    b.style.top = (pts[i].y / 560 * 100) + '%';
+    b.innerHTML = '<span class="n">0' + (i + 1) + '</span>' + s.t;
+    b.setAttribute('aria-pressed', 'false');
+    b.dataset.i = String(i);
+    ring.appendChild(b);
+    return b;
+  });
+
+  const dK = document.getElementById('d-k'), dT = document.getElementById('d-t');
+  const dQ = document.getElementById('d-q'), dA = document.getElementById('d-a');
+  const cutBtn = document.getElementById('cut');
+  const gv = document.getElementById('g-v');
+
+  let cur = 0;
+  const removed = new Set();
+
+  function render() {
+    const s = STEPS[cur];
+    dK.textContent = 'STEP 0' + (cur + 1) + ' / 06';
+    dT.textContent = s.t;
+    dQ.textContent = s.q;
+    dA.textContent = s.a;
+    const isCut = removed.has(cur);
+    cutBtn.setAttribute('aria-pressed', String(isCut));
+    cutBtn.textContent = isCut ? '把它放回去' : '把它拿掉';
+    btns.forEach((b, i) => {
+      b.setAttribute('aria-pressed', String(i === cur));
+      b.classList.toggle('gone', removed.has(i));
+    });
+    segs.forEach((el, i) => el.classList.toggle('cut', removed.has(i) || removed.has((i + 1) % 6)));
+
+    if (removed.size === 0) {
+      gv.innerHTML = '<b>暂定综合</b>：六步都发生了。';
+    } else if (removed.size === 1) {
+      const k = [...removed][0];
+      gv.innerHTML = '<b>描述或猜想</b>：少了「' + STEPS[k].t + '」这一环。' + STEPS[k].cut;
+    } else {
+      gv.innerHTML = '<b>只能算草稿</b>：拿掉了 ' + removed.size + ' 步。缺的环一多，这篇东西就不该被当成结论去读。';
+    }
+  }
+
+  btns.forEach((b) => b.addEventListener('click', () => { cur = Number(b.dataset.i); render(); }));
+  cutBtn.addEventListener('click', () => {
+    if (removed.has(cur)) removed.delete(cur); else removed.add(cur);
+    render();
+  });
+
+  render();
+
+  window.__apt = {
+    render(t) {
+      const i = Math.floor((t / 1800) % 6);
+      if (i !== cur) { cur = i; render(); }
+    },
+    state: () => ({ cur, removed: [...removed], verdict: gv.textContent }),
+    stop() {},
+  };
+})();
+</script>
+</body>
+</html>
