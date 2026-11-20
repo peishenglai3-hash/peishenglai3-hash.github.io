@@ -1,215 +1,50 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!doctype html>
+<html lang="zh-CN" data-title-zh="工作台 · 赖培胜" data-title-en="Workbench · Peisheng Lai" data-description-zh="赖培胜持续追问的问题，以及它们对应的公开项目。" data-description-en="Peisheng Lai's open questions and the public projects connected to them.">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>书桌 · 赖选</title>
-<meta name="description" content="四个可点的地方：便利贴上是四个问题，笔记本上是在写的东西，书架上是在读的六本，电脑前是在用的工具。">
-<link rel="stylesheet" href="../assets/tokens.css">
-<link rel="stylesheet" href="../assets/site.css">
-<style>
-.desk {
-  display: grid;
-  grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
-  gap: 36px;
-  align-items: start;
-  margin-top: 34px;
-}
-@media (max-width: 900px) {
-  .desk { grid-template-columns: 1fr; gap: 26px; }
-}
-
-.desk__stage { position: relative; line-height: 0; }
-.desk__stage img { width: 100%; height: auto; display: block; }
-
-.hot {
-  position: absolute;
-  background: transparent;
-  border: 1px dotted rgba(10,10,11,.42);
-  border-radius: 2px;
-  cursor: pointer;
-  padding: 0;
-  font: inherit;
-  transition: background .18s ease, border-color .18s ease;
-}
-.hot:hover { background: rgba(10,10,11,.06); border-color: rgba(10,10,11,.78); }
-.hot[aria-pressed="true"] {
-  border: 2px solid var(--ink);
-  background: rgba(10,10,11,.045);
-}
-.hot__label {
-  position: absolute;
-  top: -1px; left: -1px;
-  transform: translateY(-100%);
-  font-family: var(--font-mono);
-  font-size: .62rem;
-  letter-spacing: .12em;
-  line-height: 1.4;
-  padding: 2px 6px;
-  background: var(--paper);
-  color: var(--ink-2);
-  white-space: nowrap;
-  border: 1px solid var(--rule);
-  border-bottom: 0;
-  transition: color .18s ease, background .18s ease;
-}
-.hot[aria-pressed="true"] .hot__label { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-/* 贴着右边缘的热点，标签往左长，免得跑出画外 */
-.hot__label--end { left: auto; right: -1px; }
-
-.desk__panel { min-height: 340px; }
-@media (max-width: 900px) { .desk__panel { min-height: 0; } }
-.desk__panel .p-k {
-  font-family: var(--font-mono);
-  font-size: .68rem;
-  letter-spacing: .18em;
-  color: var(--ink-2);
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 8px;
-}
-.desk__panel h2 { font-size: 1.4rem; margin-bottom: .5em; }
-.desk__panel ul { margin: 0 0 14px; padding: 0 0 0 1.1em; }
-.desk__panel li { margin: 0 0 .35em; max-width: 26em; }
-.desk__panel .p-b { font-size: .93rem; line-height: 1.75; color: var(--ink-2); max-width: 26em; margin: 0; }
-.desk__panel .fadein { animation: swap .28s ease-out both; }
-@keyframes swap { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-
-.hint { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em; color: var(--ink-2); margin-top: 12px; }
-</style>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="赖培胜持续追问的问题，以及它们对应的公开项目。">
+  <meta name="color-scheme" content="light dark"><title>工作台 · 赖培胜</title>
+  <link rel="stylesheet" href="../assets/tokens.css"><link rel="stylesheet" href="../assets/site.css"><link rel="stylesheet" href="../assets/tools.css">
+  <script defer src="../assets/site.js"></script><script defer src="../assets/desk.js"></script>
 </head>
 <body>
-<a class="skip" href="#main">跳到正文</a>
-<div class="wrap">
+<a class="skip-link" href="#main"><span data-copy-lang="zh">跳到正文</span><span data-copy-lang="en" hidden>Skip to content</span></a>
+<div class="site-shell">
   <header class="site-head">
-    <a class="brand" href="../">赖选 · 展厅</a>
-    <nav>
-      <a href="https://github.com/peishenglai3-hash">主页</a>
-      <a href="../desk/" aria-current="page">书桌</a>
-      <a href="../sandbox/">沙盒</a>
-      <a href="../field/">方法</a>
+    <a class="brand" href="../" aria-label="赖培胜 · Peisheng Lai"><span class="brand__mark" aria-hidden="true">LP</span><span class="brand__name">赖培胜 <small>Peisheng Lai</small></span></a>
+    <nav class="main-nav" aria-label="主要导航" data-aria-zh="主要导航" data-aria-en="Primary navigation">
+      <a href="../"><span data-copy-lang="zh">主页</span><span data-copy-lang="en" hidden>Home</span></a>
+      <a href="./" aria-current="page"><span data-copy-lang="zh">工作台</span><span data-copy-lang="en" hidden>Workbench</span></a>
+      <a href="../sandbox/"><span data-copy-lang="zh">模拟器</span><span data-copy-lang="en" hidden>Sandbox</span></a>
+      <a href="../field/"><span data-copy-lang="zh">方法回路</span><span data-copy-lang="en" hidden>Method loop</span></a>
     </nav>
+    <div class="head-controls">
+      <div class="language-switch" role="group" aria-label="语言 / Language" data-aria-zh="语言" data-aria-en="Language"><button type="button" data-language="zh" aria-pressed="true">中文</button><button type="button" data-language="en" aria-pressed="false">EN</button></div>
+      <button class="theme-switch" type="button" data-theme-toggle><span data-copy-lang="zh">夜色</span><span data-copy-lang="en" hidden>Night</span><span class="theme-switch__icon" aria-hidden="true">◐</span></button>
+    </div>
   </header>
-
-  <main id="main">
-    <div class="section cap-hide" style="padding-top:38px">
-      <span class="mono">01 / 我是谁</span>
-      <h1 style="margin-top:.35em">一张能点开的书桌</h1>
-      <p class="lede">这张图不是我，是我读书时想让别人看见的样子。图上有四个地方可以点：便利贴、笔记本、书架、电脑。点哪个，右边就换——内容全部来自这张图上真实写着的东西，我没给它补台词。</p>
-    </div>
-
-    <div class="desk">
-      <div class="desk__stage" id="stage">
-        <img src="../assets/desk.webp" width="720" height="900" alt="图书馆里的书桌：左侧一摞社会学与 AI 相关的书，中间摊开的笔记本写着讨论提纲，右侧是贴满贴纸的笔记本电脑，右上方贴着黄色便利贴，前面有一杯咖啡。">
-
-        <button class="hot" data-key="notes" aria-pressed="false" aria-controls="panel"
-                style="left:84.4%;top:9.5%;width:15.1%;height:18.6%">
-          <span class="hot__label hot__label--end">A · 便利贴</span>
-        </button>
-
-        <button class="hot" data-key="books" aria-pressed="false" aria-controls="panel"
-                style="left:0;top:54.9%;width:30%;height:33%">
-          <span class="hot__label">C · 书架</span>
-        </button>
-
-        <button class="hot" data-key="notebook" aria-pressed="false" aria-controls="panel"
-                style="left:35.2%;top:66.7%;width:35%;height:26%">
-          <span class="hot__label">B · 笔记本</span>
-        </button>
-
-        <button class="hot" data-key="desk" aria-pressed="false" aria-controls="panel"
-                style="left:80.6%;top:53%;width:19.4%;height:35.5%">
-          <span class="hot__label hot__label--end">D · 电脑</span>
-        </button>
+  <main id="main" class="subpage">
+    <p class="subpage-kicker">WORKBENCH / 2026</p>
+    <h1><span data-copy-lang="zh">问题、项目和正在摸索的路径</span><span data-copy-lang="en" hidden>Questions, projects, and paths in progress</span></h1>
+    <p class="subpage-lede"><span data-copy-lang="zh">我在社会学研究与软件制作之间来回工作。挑一个问题，看看它连着哪些公开项目，以及目前能支持到什么程度。</span><span data-copy-lang="en" hidden>I move between sociological research and software making. Choose a question to see the public projects connected to it and what their current evidence supports.</span></p>
+    <div class="topic-grid">
+      <div class="topic-tabs" role="group" aria-label="持续追问" data-aria-zh="持续追问" data-aria-en="Open questions">
+        <button type="button" data-topic="evaluation" aria-pressed="true"><span class="tab-number">01</span><span class="tab-name"><span data-copy-lang="zh">评价与能力</span><span data-copy-lang="en" hidden>Evaluation & ability</span></span><span class="tab-arrow">↗</span></button>
+        <button type="button" data-topic="collaboration" aria-pressed="false"><span class="tab-number">02</span><span class="tab-name"><span data-copy-lang="zh">人机协作</span><span data-copy-lang="en" hidden>Human–AI work</span></span><span class="tab-arrow">↗</span></button>
+        <button type="button" data-topic="education" aria-pressed="false"><span class="tab-number">03</span><span class="tab-name"><span data-copy-lang="zh">教育与测量</span><span data-copy-lang="en" hidden>Education & measurement</span></span><span class="tab-arrow">↗</span></button>
+        <button type="button" data-topic="narrative" aria-pressed="false"><span class="tab-number">04</span><span class="tab-name"><span data-copy-lang="zh">叙事与地方史</span><span data-copy-lang="en" hidden>Narrative & local history</span></span><span class="tab-arrow">↗</span></button>
       </div>
-
-      <div class="desk__panel" id="panel" role="region" aria-live="polite" aria-atomic="true">
-        <!-- 由脚本填充 -->
-      </div>
+      <article class="topic-detail panel" id="topic-detail" aria-live="polite" aria-atomic="true">
+        <p class="eyebrow" id="topic-kicker">QUESTION 01</p>
+        <h2 id="topic-title">评价与能力</h2>
+        <p class="topic-detail__question" id="topic-question">评价工具怎样参与定义能力，又影响谁会被看见？</p>
+        <p class="topic-detail__text" id="topic-text">这里的项目把问题做成可操作的研究工具或小型演示；它们说明设计选择会带来什么变化，不直接代替真实社会调查。</p>
+        <ul class="topic-links" id="topic-links"></ul>
+      </article>
     </div>
-
-    <p class="note cap-hide">书架那一段刻意只列书名。没读完的不列结论，是我给自己定的规矩，也是这一页最容易被人误读的地方：书架上摆着，不等于读透了。</p>
+    <p class="workbench-note"><span data-copy-lang="zh">这里列的是公开仓库与可运行演示。未公开的稿件、学习过程和候选成果不作为已发布作品展示；fork 仓库也不计作个人原创项目。</span><span data-copy-lang="en" hidden>This page points to public repositories and runnable demonstrations. Unpublished drafts and candidate work are not presented as released work; forked repositories are not listed as original projects.</span></p>
   </main>
-
-  <footer class="site-foot">
-    <span>赖选 · 2026</span>
-    <span><a href="../">← 回展厅</a> · <a href="https://github.com/peishenglai3-hash">GitHub</a></span>
-  </footer>
+  <footer class="site-foot"><a class="footer-name" href="../">赖培胜 <span>Peisheng Lai</span></a><p><span data-copy-lang="zh">内容由我手工整理；项目状态以仓库为准。</span><span data-copy-lang="en" hidden>Curated by me; project status follows the repositories.</span></p><a href="https://github.com/peishenglai3-hash">GitHub ↗</a><span class="foot-year">2026</span></footer>
 </div>
-
-<script>
-(function () {
-  const DATA = {
-    notes: {
-      k: 'A · 便利贴',
-      title: '贴在上面的四个问题',
-      items: ['技术与权力', 'AI 的社会影响', '平等与正义？', '反思「理所当然」的权威'],
-      body: '四个都还没有答案。写在便利贴上，是因为它们每天会以不同的样子回来一次。',
-    },
-    notebook: {
-      k: 'B · 笔记本',
-      title: '讨论提纲：正在写的东西',
-      items: ['技术如何重塑社会关系', 'AI 的治理：效率、公平与权力', '权威的合理性与边界', '如何在现实中推进更平等、更自主的社会'],
-      body: '提纲的意思是：还没想完。它比结论诚实，也比结论难写。',
-    },
-    books: {
-      k: 'C · 书架',
-      title: '六本在读',
-      items: ['社会学导论（第三版）', '现代社会理论', '政治哲学：核心问题与经典文本', '权力与正当性', '人工智能：技术、社会与治理', 'AI与社会：机遇、风险与规则'],
-      body: '只列书名，不列读后感。摆在桌上的是正在用的，不是已经消化的。',
-    },
-    desk: {
-      k: 'D · 电脑',
-      title: '在这台机器上干活',
-      items: ['DeepSeek Harness', 'Chrome', 'ffmpeg'],
-      body: '研究、写作、把图做出来，都在这三件上。工具可以换；换不掉的是「这段结论能不能被别人复算一遍」。',
-    },
-  };
-  const ORDER = ['notes', 'notebook', 'books', 'desk'];
-
-  const panel = document.getElementById('panel');
-  const hots = [...document.querySelectorAll('.hot')];
-  let active = null;
-
-  function paint(key) {
-    const d = DATA[key];
-    active = key;
-    hots.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.key === key)));
-    panel.innerHTML =
-      '<div class="fadein">' +
-        '<span class="p-k">' + d.k + '</span>' +
-        '<h2>' + d.title + '</h2>' +
-        '<ul>' + d.items.map(t => '<li>' + t + '</li>').join('') + '</ul>' +
-        '<p class="p-b">' + d.body + '</p>' +
-      '</div>';
-    panel.dataset.key = key;
-  }
-
-  hots.forEach(b => {
-    b.addEventListener('click', () => paint(b.dataset.key));
-  });
-
-  // 窄屏点完自动滚到面板，不然点了没反应
-  const narrow = window.matchMedia('(max-width: 900px)');
-  hots.forEach(b => b.addEventListener('click', () => {
-    if (narrow.matches) panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  }));
-
-  paint('notes');
-
-  // 抓帧用：render(t) 把页面推到确定状态；不调用时页面完全手动
-  let raf = null;
-  window.__apt = {
-    keys: ORDER,
-    render(t) {
-      if (raf) { cancelAnimationFrame(raf); raf = null; }
-      const i = Math.floor((t / 2100) % ORDER.length);
-      if (ORDER[i] !== active) paint(ORDER[i]);
-    },
-    state: () => ({ active, panelHeight: panel.getBoundingClientRect().height }),
-    stop() {},
-  };
-})();
-</script>
 </body>
 </html>

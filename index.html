@@ -1,63 +1,95 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!doctype html>
+<html lang="zh-CN" data-title-zh="赖培胜 · 研究与制作" data-title-en="Peisheng Lai · Research and Making" data-description-zh="赖培胜的个人主页：社会学问题、软件实践与互动叙事。" data-description-en="Peisheng Lai's personal homepage: sociological questions, software practice, and interactive narrative.">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>赖选 · 展厅</title>
-<meta name="description" content="三个能动手的小东西：一张会回应的书桌、一个评价装置沙盒、一条会降级的方法回路。">
-<meta name="color-scheme" content="light">
-<link rel="stylesheet" href="assets/tokens.css">
-<link rel="stylesheet" href="assets/site.css">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="赖培胜的个人主页：社会学问题、软件实践与互动叙事。"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#f4eddf">
+  <title>赖培胜 · 研究与制作</title>
+  <link rel="stylesheet" href="assets/tokens.css"><link rel="stylesheet" href="assets/site.css"><link rel="stylesheet" href="assets/home.css">
+  <script defer src="assets/site.js"></script><script defer src="assets/home.js"></script>
 </head>
 <body>
-<a class="skip" href="#main">跳到正文</a>
-<div class="wrap">
+<a class="skip-link" href="#main"><span data-copy-lang="zh">跳到正文</span><span data-copy-lang="en" hidden>Skip to content</span></a>
+<div class="site-shell">
   <header class="site-head">
-    <a class="brand" href="./">赖选 · 展厅</a>
-    <nav>
-      <a href="https://github.com/peishenglai3-hash">主页</a>
-      <a href="desk/">书桌</a>
-      <a href="sandbox/">沙盒</a>
-      <a href="field/">方法</a>
+    <a class="brand" href="./" aria-label="赖培胜 · Peisheng Lai"><span class="brand__mark" aria-hidden="true">LP</span><span class="brand__name">赖培胜 <small>Peisheng Lai</small></span></a>
+    <nav class="main-nav" aria-label="主要导航" data-aria-zh="主要导航" data-aria-en="Primary navigation">
+      <a href="#projects"><span data-copy-lang="zh">项目</span><span data-copy-lang="en" hidden>Projects</span></a>
+      <a href="#questions"><span data-copy-lang="zh">持续追问</span><span data-copy-lang="en" hidden>Questions</span></a>
+      <a href="desk/"><span data-copy-lang="zh">工作台</span><span data-copy-lang="en" hidden>Workbench</span></a>
+      <a href="sandbox/"><span data-copy-lang="zh">模拟器</span><span data-copy-lang="en" hidden>Sandbox</span></a>
     </nav>
-  </header>
-
-  <main id="main">
-    <picture class="hero-img">
-      <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
-      <img src="assets/hero-light.svg" alt="赖选 · 主页号 第 3 版。把属于人的，交给人。" width="1200" height="320">
-    </picture>
-
-    <p class="lede">主页上写的是结论。这里放的是结论下面的东西：一张能被点开的书桌，一个能把排序翻过来的小装置，一条缺一步就会降级的回路。</p>
-
-    <div class="cards">
-      <a class="card" href="desk/">
-        <span class="k">01 / 我是谁</span>
-        <h2>书桌</h2>
-        <p>四个可以点的地方：便利贴上是四个问题，笔记本上是在写的东西，书架上是在读的六本，电脑前是在用的工具。</p>
-        <span class="go">点开这张桌子</span>
-      </a>
-      <a class="card" href="sandbox/">
-        <span class="k">02 / 我在研究什么</span>
-        <h2>评价装置沙盒</h2>
-        <p>二十个虚构学生，一个分数。拖动权重，看「谁被认作有能力」的名单换掉几个人。</p>
-        <span class="go">拖一下权重</span>
-      </a>
-      <a class="card" href="field/">
-        <span class="k">03 / 我怎么做</span>
-        <h2>方法回路</h2>
-        <p>六步。点亮任意一步读它问什么，也可以把某一步拿掉，看结论当场降级成描述或猜想。</p>
-        <span class="go">拿掉一步试试</span>
-      </a>
+    <div class="head-controls">
+      <div class="language-switch" role="group" aria-label="语言 / Language" data-aria-zh="语言" data-aria-en="Language"><button type="button" data-language="zh" aria-pressed="true">中文</button><button type="button" data-language="en" aria-pressed="false">EN</button></div>
+      <button class="theme-switch" type="button" data-theme-toggle><span data-copy-lang="zh">夜色</span><span data-copy-lang="en" hidden>Night</span><span class="theme-switch__icon" aria-hidden="true">◐</span></button>
     </div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span data-copy-lang="zh">社会学 · 软件实践 · 互动叙事</span><span data-copy-lang="en" hidden>SOCIOLOGY · SOFTWARE PRACTICE · INTERACTIVE NARRATIVE</span></p>
+        <h1 id="hero-title"><span data-copy-lang="zh">研究与制作</span><span data-copy-lang="en" hidden>Research and making</span><br><em><span data-copy-lang="zh">相互推动</span><span data-copy-lang="en" hidden>move together</span></em></h1>
+        <p class="hero-intro"><span data-copy-lang="zh">我是赖培胜。本科在华中科技大学读社会学，平时在研究问题、软件系统和互动作品之间往返。这里放正在推进的项目，也把它们还没证明的部分写清楚。</span><span data-copy-lang="en" hidden>I’m Peisheng Lai. I study sociology at Huazhong University of Science and Technology and move between research questions, software systems, and interactive projects. This page gathers current work and states what each project has not yet established.</span></p>
+        <div class="hero-actions"><a class="button button--primary" href="#projects"><span data-copy-lang="zh">沿着项目逛</span><span data-copy-lang="en" hidden>Explore projects</span><span aria-hidden="true">↘</span></a><a class="text-link" href="https://github.com/peishenglai3-hash"><span data-copy-lang="zh">GitHub 主页</span><span data-copy-lang="en" hidden>GitHub profile</span><span aria-hidden="true">↗</span></a></div>
+        <p class="hero-note"><span class="pulse-dot" aria-hidden="true"></span><span data-copy-lang="zh">近期锚点 · 2026 年 11 月</span><span data-copy-lang="en" hidden>Current anchors · November 2026</span></p>
+      </div>
+      <div class="desk-stage">
+        <img class="desk-art" src="assets/study-room.png" width="1660" height="927" alt="">
+        <span class="scene-caption"><span data-copy-lang="zh">一张可以点开的工作桌</span><span data-copy-lang="en" hidden>A workbench you can explore</span></span>
+        <button class="project-pin pin--research" type="button" data-project="research-mode" aria-controls="project-detail" aria-pressed="true"><span class="pin__dot" aria-hidden="true"></span><span class="pin__label">DSH Research Mode</span></button>
+        <button class="project-pin pin--opl" type="button" data-project="open-possibility-lab" aria-controls="project-detail" aria-pressed="false"><span class="pin__dot" aria-hidden="true"></span><span class="pin__label">Open Possibility Lab</span></button>
+        <button class="project-pin pin--praxis" type="button" data-project="praxis-loop" aria-controls="project-detail" aria-pressed="false"><span class="pin__dot" aria-hidden="true"></span><span class="pin__label">Praxis Loop</span></button>
+        <button class="project-pin pin--honghu" type="button" data-project="honghu-chronicles" aria-controls="project-detail" aria-pressed="false"><span class="pin__dot" aria-hidden="true"></span><span class="pin__label">Honghu Chronicles</span></button>
+        <span class="scene-path" aria-hidden="true"></span>
+      </div>
+    </section>
 
-    <p class="note">三个页面都是单文件、零外部请求、不收集任何数据。没有后端，关掉网也一样能开。样式沿用主页的「墨水经典」，字用系统自带的衬线，不加载网络字体。</p>
+    <section class="project-dock" id="projects" aria-labelledby="projects-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / <span data-copy-lang="zh">精选项目</span><span data-copy-lang="en" hidden>SELECTED PROJECTS</span></p><h2 id="projects-title"><span data-copy-lang="zh">点一个，看看它现在到哪</span><span data-copy-lang="en" hidden>Choose a project to see its current state</span></h2></div><p class="section-aside"><span data-copy-lang="zh">手工整理 · 按项目证据更新</span><span data-copy-lang="en" hidden>Curated by hand · Updated from project evidence</span></p></div>
+      <div class="project-layout">
+        <div class="project-list" role="group" aria-label="精选项目" data-aria-zh="精选项目" data-aria-en="Selected projects">
+          <button type="button" data-project="research-mode" aria-controls="project-detail" aria-pressed="true"><span class="project-index">01</span><span class="project-list__name">DSH Research Mode</span><span class="project-arrow" aria-hidden="true">↗</span></button>
+          <button type="button" data-project="open-possibility-lab" aria-controls="project-detail" aria-pressed="false"><span class="project-index">02</span><span class="project-list__name">Open Possibility Lab</span><span class="project-arrow" aria-hidden="true">↗</span></button>
+          <button type="button" data-project="praxis-loop" aria-controls="project-detail" aria-pressed="false"><span class="project-index">03</span><span class="project-list__name">Praxis Loop</span><span class="project-arrow" aria-hidden="true">↗</span></button>
+          <button type="button" data-project="honghu-chronicles" aria-controls="project-detail" aria-pressed="false"><span class="project-index">04</span><span class="project-list__name">Honghu Chronicles</span><span class="project-arrow" aria-hidden="true">↗</span></button>
+        </div>
+        <article class="project-detail" id="project-detail" aria-live="polite" aria-atomic="true">
+          <p class="project-detail__meta" id="project-meta">工程发布 · v0.1.2 · 2026-11-11</p><h3 id="project-name">DSH Research Mode</h3>
+          <p id="project-description">面向 DeepSeek Harness 的证据优先科研工作流，围绕研究产物及其来源记录设计。</p>
+          <p class="project-detail__boundary" id="project-boundary">边界：不替代研究判断、同行评审或真实材料解释。</p>
+          <a id="project-link" href="https://github.com/peishenglai3-hash/dsh-research-mode" target="_blank" rel="noreferrer"><span data-copy-lang="zh">查看仓库</span><span data-copy-lang="en" hidden>Open repository</span><span aria-hidden="true">↗</span></a>
+        </article>
+      </div>
+    </section>
+
+    <section class="recent-section" aria-labelledby="recent-title">
+      <div class="section-heading"><div><p class="eyebrow">02 / <span data-copy-lang="zh">最近的锚点</span><span data-copy-lang="en" hidden>RECENT ANCHORS</span></p><h2 id="recent-title"><span data-copy-lang="zh">把状态和边界一起留下</span><span data-copy-lang="en" hidden>Keep status and limits visible</span></h2></div><a class="text-link" href="desk/"><span data-copy-lang="zh">打开工作台</span><span data-copy-lang="en" hidden>Open workbench</span><span aria-hidden="true">↗</span></a></div>
+      <div class="recent-grid">
+        <article class="recent-item"><span class="recent-date">2026 / 11 / 14</span><h3>DSH Agora <small>v1.1.1</small></h3><p><span data-copy-lang="zh">只读的 DSH 插件、技能与 MCP 资产管理工具。</span><span data-copy-lang="en" hidden>A read-only asset steward for DSH plugins, skills, and MCPs.</span></p><a href="https://github.com/peishenglai3-hash/dsh-agora/releases/tag/v1.1.1"><span data-copy-lang="zh">查看发布</span><span data-copy-lang="en" hidden>View release</span> ↗</a></article>
+        <article class="recent-item"><span class="recent-date">2026 / 11 / 18</span><h3>Praxis Loop <small><span data-copy-lang="zh">原型更新</span><span data-copy-lang="en" hidden>Prototype update</span></small></h3><p><span data-copy-lang="zh">可修订的人机任务决策运行时原型；评估方案尚未执行。</span><span data-copy-lang="en" hidden>A runtime prototype for revisable human–AI task decisions; the evaluation plan has not been run.</span></p><a href="https://github.com/peishenglai3-hash/praxis-loop"><span data-copy-lang="zh">查看仓库</span><span data-copy-lang="en" hidden>View repository</span> ↗</a></article>
+        <article class="recent-item"><span class="recent-date">2026 / 11 / 17</span><h3>Honghu Chronicles <small><span data-copy-lang="zh">归档基线</span><span data-copy-lang="en" hidden>Archived baseline</span></small></h3><p><span data-copy-lang="zh">序章至第四章的可玩基线已归档；本次主页更新不改动游戏仓库，也不声称完成新一轮回归。</span><span data-copy-lang="en" hidden>The playable prologue-to-chapter-four baseline is archived. This homepage update leaves the game repository untouched and makes no new regression claim.</span></p><a href="https://github.com/peishenglai3-hash/honghu-chronicles"><span data-copy-lang="zh">查看归档</span><span data-copy-lang="en" hidden>View archive</span> ↗</a></article>
+      </div>
+    </section>
+
+    <section class="questions-section" id="questions" aria-labelledby="questions-title">
+      <p class="eyebrow">03 / <span data-copy-lang="zh">持续追问</span><span data-copy-lang="en" hidden>OPEN QUESTIONS</span></p><h2 id="questions-title"><span data-copy-lang="zh">项目是工作台，也是问题的一部分。</span><span data-copy-lang="en" hidden>Projects are workbenches—and part of the questions.</span></h2>
+      <div class="question-lines">
+        <p><span>01</span><span data-copy-lang="zh">评价工具怎样参与定义能力，又影响谁会被看见？</span><span data-copy-lang="en" hidden>How do evaluation tools help define ability—and shape who gets recognized?</span></p>
+        <p><span>02</span><span data-copy-lang="zh">人和 AI 长期协作时，失败、分歧与责任能不能留在记录里？</span><span data-copy-lang="en" hidden>In long-term human–AI work, can failure, dissent, and responsibility remain visible?</span></p>
+        <p><span>03</span><span data-copy-lang="zh">研究里的方法与判断，怎样回到真实的制度和生活处境？</span><span data-copy-lang="en" hidden>How can research methods and judgments return to real institutions and lived conditions?</span></p>
+      </div>
+    </section>
+
+    <section class="more-projects" aria-labelledby="more-title">
+      <div class="section-heading"><div><p class="eyebrow">04 / <span data-copy-lang="zh">相关项目</span><span data-copy-lang="en" hidden>RELATED PROJECTS</span></p><h2 id="more-title"><span data-copy-lang="zh">还在同一张工作桌上的东西</span><span data-copy-lang="en" hidden>More work from the same desk</span></h2></div></div>
+      <div class="related-list">
+        <a href="https://github.com/peishenglai3-hash/praxis-runtime"><span><b>Praxis Runtime</b><small>v0.1.0 Engineering Preview</small></span><span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/peishenglai3-hash/dsh-agora"><span><b>DSH Agora</b><small>v1.1.1 · read-only</small></span><span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/peishenglai3-hash/the_final-runtime-kernel"><span><b>The Final Runtime Kernel</b><small><span data-copy-lang="zh">协议与运行时研究</span><span data-copy-lang="en" hidden>Runtime and protocol research</span></small></span><span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/peishenglai3-hash/Mohen-read"><span><b>Mohen-read</b><small><span data-copy-lang="zh">阅读与思想归档</span><span data-copy-lang="en" hidden>Reading and thought archive</span></small></span><span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
   </main>
-
-  <footer class="site-foot">
-    <span>赖选 · 2026</span>
-    <span><a href="https://github.com/peishenglai3-hash">GitHub</a> · 与仓库冲突时，以仓库为准</span>
-  </footer>
+  <footer class="site-foot"><a class="footer-name" href="./">赖培胜 <span>Peisheng Lai</span></a><p><span data-copy-lang="zh">内容由我手工整理；项目状态以各仓库与 Release 为准。</span><span data-copy-lang="en" hidden>Curated by me; project status follows each repository and release.</span></p><a href="https://github.com/peishenglai3-hash">GitHub ↗</a><span class="foot-year">2026</span></footer>
 </div>
 </body>
 </html>
